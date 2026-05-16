@@ -1,43 +1,53 @@
 inventario = []
 
-equipamentos = ['ESPADA', 'CAPACETE', 'PEITORAL', 'CALÇA']
-qualidades = ['DIAMANTE', 'FERRO', 'OURO']
+equipamentos = ['Espada', 'Capacete', 'Peitoral', 'Calça']
+qualidades = ['Diamante', 'Ferro', 'Ouro']
+
 
 def linha():
     print('\n'+'-=-'*10 + '\n')
 
-def menu():
-    print ('\n'+'+'+'-=-'*10+'+')
-    print('|  -> BEM VINDO AO ARSENAL <-  |')
-    print ('+'+'-=-'*10+'+'+'\n')
 
-def conclusao():
-    print('\n'+ '-=-'*10 + '\n' + 'Seu inventário final ficou assim: ' + '\n' +'-=-'*10)
-    for i, itens in enumerate(inventario, start=1):
-        print(f'{i} - {itens}')
+def menu():
+    print('\n'+'+'+'-=-'*10+'+')
+    print('|  -> BEM VINDO AO ARSENAL <-  |')
+    print('+'+'-=-'*10+'+'+'\n')
+
+def listar(lista):
+    print(f'Itens disponíveis:\n🔸{'\n🔸'.join(lista)}')
+
+
 
 def selecao_itens():
     resposta = 'S'
 
     while resposta == 'S':
 
-        print('ITENS QUE VOCÊ PODE ADICIONAR: \n🔸 ESPADA \n🔸 CAPACETE \n🔸 PEITORAL \n🔸 CALÇA \n🔸 BOTAS'+'\n')
+        listar(equipamentos)
+        item = input('O que deseja adicionar ao inventário? \n').capitalize()
+        while item not in equipamentos:
+            print('Item inválido.')
+            listar(equipamentos)
+            item = input('Digite novamente: ').capitalize()
 
-        inventario.append(input('Oque deseja levar no inventário? \n'))
         print('=-='*20)
 
-        qualidade = input(
-            f'Informe a qualidade da(o) {inventario[-1].capitalize()}: \n🔸 DIAMANTE \n🔸 FERRO \n🔸 OURO \n')
+        qualidade = input(f'Informe a qualidade da(o) {item.capitalize()}:')
+        listar(qualidades)
+        while qualidade not in qualidades:
+            print('Qualidade inválida.')
+            listar(qualidades)
+            qualidade = input('Digite novamente: ').capitalize()
 
-        nomenclatura = inventario[-1].capitalize() + \
-            ' de ' + qualidade.capitalize()
+        nomenclatura = item.capitalize() + ' de ' + qualidade.capitalize()
+        inventario.append(nomenclatura)
 
-        inventario[-1] = nomenclatura
         linha()
-        print(f'{inventario[-1]} adicionado ao inventario✅' + '\n')
+        print(f'{nomenclatura} adicionado ao inventario✅' + '\n')
 
         resposta = input('Deseja adicionar mais algum item? [S / N]').upper()
         linha()
+
 
 def melhorias():
 
@@ -45,7 +55,6 @@ def melhorias():
 
     while decisao_melhoria == 'S':
         decisao_melhoria = input('Deseja melhorar algum item [S/N]? ').upper()
-
 
         if decisao_melhoria == "S":
             linha()
@@ -70,6 +79,14 @@ def melhorias():
                 continue
 
             inventario[indice] = item_melhorado
+
+
+def conclusao():
+    print('\n' + '-=-'*10 + '\n' +
+          'Seu inventário final ficou assim: ' + '\n' + '-=-'*10)
+    for i, itens in enumerate(inventario, start=1):
+        print(f'{i} - {itens}')
+
 
 menu()
 
