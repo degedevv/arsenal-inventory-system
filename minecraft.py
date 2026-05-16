@@ -5,7 +5,7 @@ qualidades = ['Diamante', 'Ferro', 'Ouro']
 
 
 def linha():
-    print('\n'+'-=-'*10 + '\n')
+    print('\n'+'-=-'*13 + '\n')
 
 
 def menu():
@@ -13,9 +13,9 @@ def menu():
     print('|  -> BEM VINDO AO ARSENAL <-  |')
     print('+'+'-=-'*10+'+'+'\n')
 
-def listar(lista):
-    print(f'Itens disponíveis:\n🔸{'\n🔸'.join(lista)}')
 
+def listar(lista):
+    print(f'Itens disponíveis:\n \n🔸{'\n🔸'.join(lista)} \n')
 
 
 def selecao_itens():
@@ -24,7 +24,7 @@ def selecao_itens():
     while resposta == 'S':
 
         listar(equipamentos)
-        item = input('O que deseja adicionar ao inventário? \n').capitalize()
+        item = input('O que deseja adicionar ao seu inventário? \n').capitalize()
         while item not in equipamentos:
             print('Item inválido.')
             listar(equipamentos)
@@ -32,18 +32,18 @@ def selecao_itens():
 
         print('=-='*20)
 
-        qualidade = input(f'Informe a qualidade da(o) {item.capitalize()}:')
         listar(qualidades)
+        qualidade = input(f'Informe a qualidade da(o) {item}: ').capitalize()
         while qualidade not in qualidades:
             print('Qualidade inválida.')
             listar(qualidades)
             qualidade = input('Digite novamente: ').capitalize()
 
-        nomenclatura = item.capitalize() + ' de ' + qualidade.capitalize()
+        nomenclatura = item + ' de ' + qualidade
         inventario.append(nomenclatura)
 
         linha()
-        print(f'{nomenclatura} adicionado ao inventario✅' + '\n')
+        print(f'{nomenclatura} adicionado ao seu inventario✅' + '\n')
 
         resposta = input('Deseja adicionar mais algum item? [S / N]').upper()
         linha()
@@ -59,7 +59,7 @@ def melhorias():
         if decisao_melhoria == "S":
             linha()
             for i, itens in enumerate(inventario, start=1):
-                print(f'{i} - {itens}')
+                print(f'{i} - {itens} \n')
 
             indice = int(input('Selecicona qual item deseja melhorar: ')) - 1
             item_antes = inventario[indice]
@@ -67,25 +67,26 @@ def melhorias():
             if 'Ouro' in item_antes:
                 item_melhorado = item_antes.replace('Ouro', 'Ferro')
                 linha()
-                print(f'Item melhorado com sucesso✅')
+                print(f'Item melhorado com sucesso! ✅\n')
 
             elif 'Ferro' in item_antes:
                 item_melhorado = item_antes.replace('Ferro', 'Diamante')
                 linha()
-                print(f'Item melhorado com sucesso✅')
+                print(f'Item melhorado com sucesso! ✅ \n')
             else:
                 linha()
-                print('Não é possivel melhorar um item de Diamante (nv MÁXIMO)')
+                print('Não é possivel melhorar um item de Diamante (nv. MÁXIMO) \n')
                 continue
 
             inventario[indice] = item_melhorado
 
 
 def conclusao():
-    print('\n' + '-=-'*10 + '\n' +
-          'Seu inventário final ficou assim: ' + '\n' + '-=-'*10)
+    linha()
+    print('Seu inventário final ficou assim: ' + '\n ')
     for i, itens in enumerate(inventario, start=1):
         print(f'{i} - {itens}')
+    linha()
 
 
 menu()
