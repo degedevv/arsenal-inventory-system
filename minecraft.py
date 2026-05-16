@@ -4,6 +4,19 @@ equipamentos = ['Espada', 'Capacete', 'Peitoral', 'Calça']
 qualidades = ['Diamante', 'Ferro', 'Ouro']
 
 
+def verificar_itens(lista, mensagem):
+    listar(lista)
+
+    escolha = input(mensagem).capitalize()
+
+    while escolha not in lista:
+        print ('Opcão invalida.')
+        listar(lista)
+        escolha = input('Tente novamente: ').capitalize()
+    return escolha
+
+
+
 def linha():
     print('\n'+'-=-'*13 + '\n')
 
@@ -15,7 +28,8 @@ def menu():
 
 
 def listar(lista):
-    print(f'Itens disponíveis:\n \n🔸{'\n🔸'.join(lista)} \n')
+    print('Itens disponíveis:\n')
+    print('🔸' + '\n🔸'.join(lista)+'\n')
 
 
 def selecao_itens():
@@ -23,21 +37,11 @@ def selecao_itens():
 
     while resposta == 'S':
 
-        listar(equipamentos)
-        item = input('O que deseja adicionar ao seu inventário? \n').capitalize()
-        while item not in equipamentos:
-            print('Item inválido.')
-            listar(equipamentos)
-            item = input('Digite novamente: ').capitalize()
+        item = verificar_itens(equipamentos, 'Escolha um item: ')
 
         print('=-='*20)
 
-        listar(qualidades)
-        qualidade = input(f'Informe a qualidade da(o) {item}: ').capitalize()
-        while qualidade not in qualidades:
-            print('Qualidade inválida.')
-            listar(qualidades)
-            qualidade = input('Digite novamente: ').capitalize()
+        qualidade = verificar_itens(qualidades, 'Escolha uma qualidade: ')
 
         nomenclatura = item + ' de ' + qualidade
         inventario.append(nomenclatura)
@@ -50,7 +54,6 @@ def selecao_itens():
 
 
 def melhorias():
-
     decisao_melhoria = 'S'
 
     while decisao_melhoria == 'S':
@@ -61,18 +64,28 @@ def melhorias():
             for i, itens in enumerate(inventario, start=1):
                 print(f'{i} - {itens} \n')
 
-            indice = int(input('Selecicona qual item deseja melhorar: ')) - 1
+            try:
+                indice = int(input('Selecione qual item deseja melhorar')) - 1
+
+                if indice < 0 or indice >= len(inventario):
+                    print('Número inválido.')
+                    continue
+
+            except ValueError:
+                print('Digite um número: ')
+                continue
+
             item_antes = inventario[indice]
 
             if 'Ouro' in item_antes:
                 item_melhorado = item_antes.replace('Ouro', 'Ferro')
                 linha()
-                print(f'Item melhorado com sucesso! ✅\n')
+                print('Item melhorado com sucesso! ✅\n')
 
             elif 'Ferro' in item_antes:
                 item_melhorado = item_antes.replace('Ferro', 'Diamante')
                 linha()
-                print(f'Item melhorado com sucesso! ✅ \n')
+                print('Item melhorado com sucesso! ✅ \n')
             else:
                 linha()
                 print('Não é possivel melhorar um item de Diamante (nv. MÁXIMO) \n')
